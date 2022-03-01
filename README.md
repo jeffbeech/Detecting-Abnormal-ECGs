@@ -15,7 +15,7 @@ This dataset, "ECG5000" is a 20-hour long ECG originating from Physionet. It con
 ## Modeling
 The problem at hand will be solved with a neural network using an autoencoder.  The graph below illustrates how this works, but it is easiest to think of it in the same way your phone camera works – your phone takes an image, compresses it for storage purposes, and recreates it from the compressed version when you look at it on your phone screen.  An autoencoder takes data, compresses it, and then attempts to reassemble it as closely as possible to the original.
 
-!images/Architecture-of-an-undercomplete-autoencoder-with-a-single-encoding-layer-and-a-single.png
+![](https://user-images.githubusercontent.com/89176309/156230964-139eea97-a9c8-4da3-b39d-7e05ef0fbd56.png)
 
 For our model, the autoencoder will be trained to recognize only normal ECGs.  The difference between each original and “reconstructed” ECG will measure and recorded as the amount of error.  We’ll take the errors and add a threshold amount – anything greater than that total amount will be identified as an abnormal ECG when we show the model our mixed set of normal and abnormal ECGs.
 
