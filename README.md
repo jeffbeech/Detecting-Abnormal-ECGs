@@ -47,7 +47,7 @@ I also looked at the graphs for the incorrect predictions we made (example below
 
 Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was 2nd place in false negatives.  In the end, we cared the most about false positives.
 
-![](https://user-images.githubusercontent.com/89176309/156608462-d34eff22-1c26-4a98-9f9f-6d93db459b17.png)
+![scores](https://user-images.githubusercontent.com/89176309/156624305-ba539f16-f8a2-4ced-8aa6-57e9d358ce1e.png)
 
 ## Recommendations and Next Steps
 First, it is important to emphasize that nothing replaces an expert eye and mind on complex health issues.  These recommendations are meant to supplement medical professionals, not to replace their expertise.  With that said, I suggest these items as next steps:
