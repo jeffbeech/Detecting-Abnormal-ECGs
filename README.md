@@ -12,6 +12,8 @@ Doctors are in short supply worldwide.  Some areas, such as in central Africa an
 
 This dataset, "ECG5000" is a 20-hour long ECG originating from Physionet. It consists of 5,000 heartbeats randomly selected from a single patient with congestive heart failure, recorded over a 20 hour period.  The set contains 2,919 normal heartbeats, labeled as “1”, and 2,079 abnormal heartbeats, labeled as “0”.  Each heartbeat has been made equal length, and consists of 140 datapoints.
 
+The data was split to remove the labels from the data and create a target data file with just the labels.  Borth files were train-test split, and the data file was scaled between 0 and 1 as tensor arrays.  The training set was divided into normal and abnormal sets so the model could be trained on just the normal heartbeats.
+
 ## Modeling
 The problem at hand will be solved with a neural network using an autoencoder.  The graph below illustrates how this works, but it is easiest to think of it in the same way your phone camera works – your phone takes an image, compresses it for storage purposes, and recreates it from the compressed version when you look at it on your phone screen.  An autoencoder takes data, compresses it, and then attempts to reassemble it as closely as possible to the original.
 
@@ -19,8 +21,27 @@ The problem at hand will be solved with a neural network using an autoencoder.  
 
 For our model, the autoencoder will be trained to recognize only normal ECGs.  The difference between each original and “reconstructed” ECG will measure and recorded as the amount of error.  We’ll take the errors and add a threshold amount – anything greater than that total amount will be identified as an abnormal ECG when we show the model our mixed set of normal and abnormal ECGs.
 
+A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 ephochs.  The process for each model was as follows:
+
+Comparison of Train vs. Validation Loss
+Visualization of Input vs. Reconstruction of 10 Random Normal and Abnormal ECGs.
+Calculation of a threshold
+Making predictions
+Scoring (Accuracy, Precision, Recall, F1)
+Confusion Matrix
+
 ## Evaluation
+The precision metric was the primary metric I used, because it told me the percentage of the time I was predicting and normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correcting differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was ~99 correct.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs 95% of the time.  
+
+I also looked at the graphs for the incorrect predictions we made (example below). For the 3 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obvious, something that couldn't be detected by training the model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
+
+Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was 2nd place in false negatives.  In the end, we cared the most about false positives.
 
 ## Recommendations and Next Steps
+First, it is important to emphasize that nothing replaces an expert eye and mind on complex health issues.  These recommendations are meant to supplement medical professionals, not to replace their expertise.  With that said, I suggest these items as next steps:
 
+1. Verify the modeling used here with a much larger dataset including heartbeats from multiple individuals.  Collecting a large database of normal heartbeats would be best initial move forward.
+2. Clarify your vision with your medical professionals.  Approach this as a method to support medical staff, not to replace the ultimate need for doctors to read ECGs.
+3. This model could easily be implemented in a browser, but a hardware consultant should be retained to develop the necessary hardware and or software to input the data into a browser or app.  
+4. Once the data input problems are solved, training your staff to use the model would be quite simple.
 ## Repository Structure
