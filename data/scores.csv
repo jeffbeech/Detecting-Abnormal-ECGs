@@ -1,3 +1,3 @@
-﻿,Baseline Model - PCA,Model 2 - PCA,Non-Linear Autoencoder,Best Model
-Accuracy,87.3,94.7,93.5,94.5
-Precision,90,98.7,99.4,99.4
+,Baseline Model - PCA,Model 2 - PCA,Non-Linear Autoencoder,Best Model
+Accuracy,61.7,94.7,93.5,94.5
+Precision,60.6,98.7,99.4,99.4
