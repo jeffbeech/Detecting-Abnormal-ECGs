@@ -21,21 +21,33 @@ The problem at hand will be solved with a neural network using an autoencoder.  
 
 For our model, the autoencoder will be trained to recognize only normal ECGs.  The difference between each original and “reconstructed” ECG will measure and recorded as the amount of error.  We’ll take the errors and add a threshold amount – anything greater than that total amount will be identified as an abnormal ECG when we show the model our mixed set of normal and abnormal ECGs.
 
+
+
 A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 ephochs.  The process for each model was as follows:
 
 Comparison of Train vs. Validation Loss
+
 Visualization of Input vs. Reconstruction of 10 Random Normal and Abnormal ECGs.
+
 Calculation of a threshold
+
 Making predictions
+
 Scoring (Accuracy, Precision, Recall, F1)
+
 Confusion Matrix
 
 ## Evaluation
 The precision metric was the primary metric I used, because it told me the percentage of the time I was predicting and normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correcting differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was ~99 correct.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs 95% of the time.  
 
-I also looked at the graphs for the incorrect predictions we made (example below). For the 3 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obvious, something that couldn't be detected by training the model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
+I also looked at the graphs for the incorrect predictions we made (example below). For the 3 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by training the model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
+
+![sample false positive](https://user-images.githubusercontent.com/89176309/156607544-885f74b7-bebc-44ee-bb07-ae6f34af813b.png)
+![sample false negative](https://user-images.githubusercontent.com/89176309/156607584-c9aa07e8-bfdf-4fb4-8b53-3308083b690b.png)
 
 Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was 2nd place in false negatives.  In the end, we cared the most about false positives.
+
+![](https://user-images.githubusercontent.com/89176309/156608462-d34eff22-1c26-4a98-9f9f-6d93db459b17.png)
 
 ## Recommendations and Next Steps
 First, it is important to emphasize that nothing replaces an expert eye and mind on complex health issues.  These recommendations are meant to supplement medical professionals, not to replace their expertise.  With that said, I suggest these items as next steps:
