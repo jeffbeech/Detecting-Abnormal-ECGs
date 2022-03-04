@@ -117,4 +117,4 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 ```
 
 ## For more information
-Find the full [Jupyter notebook](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/project_notebook.ipynb) and the [presentation](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/Presentation.pdf).
+See the full [Jupyter notebook](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/project_notebook.ipynb) and the [presentation](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/Presentation.pdf).  An environment.yml file and a requirements.txt file are included in the repository for full reproducability.
