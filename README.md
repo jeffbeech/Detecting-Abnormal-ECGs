@@ -1,5 +1,7 @@
 # Detecting Abnormal ECGs
 
+![ecg](https://user-images.githubusercontent.com/89176309/156850242-c54ae0a8-9bf6-4e43-a2d2-de88c2b9abed.jpeg)
+
 ## Introduction
 
 The electrocardiograph (ECG) is a universally accepted diagnostic tool for physicians to analyze heartbeats.  Since its invention in 1902 by Dutch physician Willem Einthoven, it ushered in "a new era in which various machines and technical procedures gradually replaced the physician's unaided senses and the stethoscope as the primary tools of cardiac diagnosis." [ (source)](https://pubmed.ncbi.nlm.nih.gov/8184849/#:~:text=The%20invention%20of%20the%20electrocardiograph,arrhythmias%20and%20acute%20myocardial%20infarction.). Without doubt, the identification of heart anomalies through ECG's is an essential activity, and the use of machine learning models to aid physicians in this task would prove quite useful.
@@ -23,7 +25,7 @@ For our model, the autoencoder will be trained to recognize only normal ECGs.  T
 
 
 
-A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  The process for each model was as follows:
+A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations.  The process for each model was as follows:
 
 Comparison of Train vs. Validation Loss
 
