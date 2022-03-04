@@ -58,3 +58,57 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 4. Once the data input problems are solved, training your staff to use the model would be quite simple.
 
 ## Repository Structure
+```
+
+├── autoencoder
+|   ├──tuning_autoencoder6
+|.     ├──Folders containing Keras Tuner modeling info   
+|
+├── data
+|   ├── ecg.csv
+|   ├── scores.csv 
+
+├── Images 
+|   ├── anomalous_ecg.png
+|   ├── Architecture-of-an-undercomplete-autoencoder-with-a-single-encoding-layer-and-a-single.png
+|   ├── best_model_abnorm_in_out.png
+|   ├── best_model_cm.png
+|   ├── best_model_norm_in_out.png
+|   ├── normal_ecg.png
+|   ├── pca_model_1_abnorm_in_out.png
+|   ├── pca_model_1_cm.png
+|   ├── pca_model_1_norm_in_out.png
+|   ├── pca_model_2_abnorm_in_out.png
+|   ├── pca_model_2_cm.png
+|   ├── pca_model_2_norm_in_out.png
+|   ├── sample false negative.png
+|   ├── sample false negatives.png
+|   ├── sample false positive.png
+|   ├── sample false positives.png
+|   ├── scores.png
+|   ├── seq_model_1_abnorm_in_out.png
+|   ├── seq_model_1_cm.png
+|   ├── seq_model_1_norm_in_out.png
+
+├── notebooks
+|   ├── Streamlit.ipynb
+|   ├── work_notebook_1.ipynb
+|   ├── work_notebook_2.ipynb
+|   ├── jeff.ipynb
+    
+├── .gitignore
+
+├── Boosting Vaccination Rates Presentation.pdf
+
+├── first_model_notebook.ipynb
+
+├── project_notebook.ipynb
+
+├── presentation.pdf
+
+├── requirements.txt
+
+├── environment.yml
+
+├── README.md
+```
