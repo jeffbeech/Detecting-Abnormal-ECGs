@@ -23,7 +23,7 @@ For our model, the autoencoder will be trained to recognize only normal ECGs.  T
 
 
 
-A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 ephochs.  The process for each model was as follows:
+A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  The process for each model was as follows:
 
 Comparison of Train vs. Validation Loss
 
@@ -37,8 +37,13 @@ Scoring (Accuracy, Precision, Recall, F1)
 
 Confusion Matrix
 
+### Sample graphs of normal and abnormal heartbeats with reconstructions and error
+
+![image](https://user-images.githubusercontent.com/89176309/156687955-d2cac850-1890-4214-9707-2057cf1def29.png)
+![image](https://user-images.githubusercontent.com/89176309/156688083-a69cca95-1b2b-4748-ab8c-0a8bec1ed2dc.png)
+
 ## Evaluation
-The precision metric was the primary metric I used, because it told me the percentage of the time I was predicting and normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correcting differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was ~99 correct.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs 95% of the time.  
+The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs 95% of the time.  
 
 I also looked at the graphs for the incorrect predictions we made (example below). For the 3 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by training the model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
 
@@ -62,7 +67,7 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 
 ├── autoencoder
 |   ├──tuning_autoencoder6
-|.     ├──Folders containing Keras Tuner modeling info   
+|      ├──Folders containing Keras Tuner modeling info   
 |
 ├── data
 |   ├── ecg.csv
@@ -98,8 +103,6 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
     
 ├── .gitignore
 
-├── Boosting Vaccination Rates Presentation.pdf
-
 ├── first_model_notebook.ipynb
 
 ├── project_notebook.ipynb
@@ -112,3 +115,6 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 
 ├── README.md
 ```
+
+## For more information
+Find the full [Jupyter notebook](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/project_notebook.ipynb) and the [presentation](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/Presentation.pdf).
