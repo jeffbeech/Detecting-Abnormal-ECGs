@@ -1,4 +1,4 @@
-# ECG Anomaly Detection
+# Detecting Abnormal ECGs
 
 ## Introduction
 
@@ -12,7 +12,7 @@ Doctors are in short supply worldwide.  Some areas, such as in central Africa an
 
 This dataset, "ECG5000" is a 20-hour long ECG originating from Physionet. It consists of 5,000 heartbeats randomly selected from a single patient with congestive heart failure, recorded over a 20 hour period.  The set contains 2,919 normal heartbeats, labeled as “1”, and 2,079 abnormal heartbeats, labeled as “0”.  Each heartbeat has been made equal length, and consists of 140 datapoints.
 
-The data was split to remove the labels from the data and create a target data file with just the labels.  Borth files were train-test split, and the data file was scaled between 0 and 1 as tensor arrays.  The training set was divided into normal and abnormal sets so the model could be trained on just the normal heartbeats.
+The data was split to remove the labels from the data and create a target data file with just the labels.  Both files were train-test split, and the data file was scaled between 0 and 1 as tensor arrays.  The training set was divided into normal and abnormal sets so the model could be trained on just the normal heartbeats.
 
 ## Modeling
 The problem at hand will be solved with a neural network using an autoencoder.  The graph below illustrates how this works, but it is easiest to think of it in the same way your phone camera works – your phone takes an image, compresses it for storage purposes, and recreates it from the compressed version when you look at it on your phone screen.  An autoencoder takes data, compresses it, and then attempts to reassemble it as closely as possible to the original.
@@ -43,7 +43,7 @@ Confusion Matrix
 ![image](https://user-images.githubusercontent.com/89176309/156688083-a69cca95-1b2b-4748-ab8c-0a8bec1ed2dc.png)
 
 ## Evaluation
-The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs 95% of the time.  Compared to the baseline model scores of 85% accuracy and 84% precision, this was a huge improvement.
+The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~94%, which means it accurately evaluated all of the ECGs about 94% of the time.  Compared to the baseline model scores of 74% accuracy and 73% precision, this was a huge improvement.
 
 I also looked at the graphs for the incorrect predictions we made (example below). For the 3 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by training the model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
 
@@ -62,13 +62,15 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 3. This model could easily be implemented in a browser, but a hardware consultant should be retained to develop the necessary hardware and or software to input the data into a browser or app.  
 4. Once the data input problems are solved, training your staff to use the model would be quite simple.
 
+Although there is already quite sophisticated hardware and software available to make detailed classifications of heartbeats, this model is specifically designed to show only one thing - normal or abnormal.  In other words, it's for field testing, the idea being that we want to know quickly and accurately if someone needs to see a physician.  I believe that we have more than enough evidence to move forward with further data collection and research to create practical applications for what we've learned. 
+
 ## Repository Structure
 ```
 
 ├── autoencoder
 |   ├──tuning_autoencoder6
 |      ├──Folders containing Keras Tuner modeling info   
-|
+
 ├── data
 |   ├── ecg.csv
 |   ├── scores.csv 
@@ -95,15 +97,24 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 |   ├── seq_model_1_cm.png
 |   ├── seq_model_1_norm_in_out.png
 
+├── models
+|   ├── base_model
+|       ├──Folders and files containing saved base_model info 
+|   ├── best model
+|       ├──Folders and files containing saved best_model info
+|   ├── pca_model_2
+|       ├──Folders and files containing saved pca_model_2 info
+|   ├── seq_model_1
+|       ├──Folders and files containing saved seq_model_1 info
+
 ├── notebooks
 |   ├── Streamlit.ipynb
 |   ├── work_notebook_1.ipynb
 |   ├── work_notebook_2.ipynb
 |   ├── jeff.ipynb
+|   ├── first_model_notebook.ipynb
     
 ├── .gitignore
-
-├── first_model_notebook.ipynb
 
 ├── project_notebook.ipynb
 
@@ -117,4 +128,4 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 ```
 
 ## For more information
-See the full [Jupyter notebook](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/project_notebook.ipynb) and the [presentation](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/Presentation.pdf).  An environment.yml file and a requirements.txt file are included in the repository for full reproducability.
+See the full [Jupyter notebook](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/project_notebook.ipynb) and the [presentation](https://github.com/jeffbeech/ECG_Anomaly_Detection/blob/main/Presentation.pdf).  An environment.yml file and a requirements.txt file are included in the repository for full reproducibility.
