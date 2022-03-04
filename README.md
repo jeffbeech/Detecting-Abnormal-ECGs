@@ -111,6 +111,7 @@ Although there is already quite sophisticated hardware and software available to
 |   ├── Streamlit.ipynb
 |   ├── work_notebook_1.ipynb
 |   ├── work_notebook_2.ipynb
+|   ├── work_notebook_3.ipynb
 |   ├── jeff.ipynb
 |   ├── first_model_notebook.ipynb
     
