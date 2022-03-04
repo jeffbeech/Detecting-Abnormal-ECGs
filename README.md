@@ -45,7 +45,7 @@ I also looked at the graphs for the incorrect predictions we made (example below
 ![sample false positive](https://user-images.githubusercontent.com/89176309/156607544-885f74b7-bebc-44ee-bb07-ae6f34af813b.png)
 ![sample false negative](https://user-images.githubusercontent.com/89176309/156607584-c9aa07e8-bfdf-4fb4-8b53-3308083b690b.png)
 
-Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was 2nd place in false negatives.  In the end, we cared the most about false positives.
+Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was also first place in false negatives.
 
 ![scores](https://user-images.githubusercontent.com/89176309/156624305-ba539f16-f8a2-4ced-8aa6-57e9d358ce1e.png)
 
@@ -56,4 +56,5 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 2. Clarify your vision with your medical professionals.  Approach this as a method to support medical staff, not to replace the ultimate need for doctors to read ECGs.
 3. This model could easily be implemented in a browser, but a hardware consultant should be retained to develop the necessary hardware and or software to input the data into a browser or app.  
 4. Once the data input problems are solved, training your staff to use the model would be quite simple.
+
 ## Repository Structure
