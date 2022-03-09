@@ -25,7 +25,7 @@ For our model, the autoencoder will be trained to recognize only normal ECGs.  T
 
 
 
-A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations.  The process for each model was as follows:
+A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations, which used mean absolute error (MAE) to calculate error.  The process for each model was as follows:
 
 Comparison of Train vs. Validation Loss
 
@@ -45,9 +45,9 @@ Confusion Matrix
 ![image](https://user-images.githubusercontent.com/89176309/156688083-a69cca95-1b2b-4748-ab8c-0a8bec1ed2dc.png)
 
 ## Evaluation
-The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adaptedd from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~94%, which means it accurately evaluated all of the ECGs about 94% of the time.  Compared to the baseline model scores of 74% accuracy and 73% precision, this was a huge improvement.
+The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not (a false positive).  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adapted from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~94%, which means it accurately evaluated all of the ECGs about 94% of the time.  Compared to the baseline model scores of 74% accuracy and 73% precision, this was a huge improvement.
 
-I also looked at the graphs for the incorrect predictions we made (example below). For the 3 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by training the model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
+I also looked at the graphs for the incorrect predictions we made (example below). For the 2 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by the trained model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
 
 ![sample false positive](https://user-images.githubusercontent.com/89176309/156607544-885f74b7-bebc-44ee-bb07-ae6f34af813b.png)
 ![sample false negative](https://user-images.githubusercontent.com/89176309/156607584-c9aa07e8-bfdf-4fb4-8b53-3308083b690b.png)
@@ -64,7 +64,11 @@ First, it is important to emphasize that nothing replaces an expert eye and mind
 3. This model could easily be implemented in a browser, but a hardware consultant should be retained to develop the necessary hardware and or software to input the data into a browser or app.  
 4. Once the data input problems are solved, training your staff to use the model would be quite simple.
 
-Although there is already quite sophisticated hardware and software available to make detailed classifications of heartbeats, this model is specifically designed to show only one thing - normal or abnormal.  In other words, it's for field testing, the idea being that we want to know quickly and accurately if someone needs to see a physician.  I believe that we have more than enough evidence to move forward with further data collection and research to create practical applications for what we've learned. 
+Although there is already quite sophisticated hardware and software available to make detailed classifications of heartbeats, this model is specifically designed to show only one thing - normal or abnormal.  In other words, it's for field testing, the idea being that we want to know quickly and accurately if someone needs to see a physician.  I believe that we have more than enough evidence to move forward with further data collection and research to create practical applications for what we've learned, and I wholheartedly recommend accelerating the commitment of resources toward development of this project.
+
+## One more thing - Streamlit
+
+I created a Streamlit app that I used to demonstrate the potential of running this model in a browser.  For the presentation connected with this project, I also produced a short video for Medic to illustrate its usage and siimplicity.  The Streamlit GitHub includes the Jupyter notebook and files for reproducibility.  It can be found [here](https://github.com/jeffbeech/ECG-Demo).  The demo video is located [here](https://github.com/jeffbeech/Detecting-Abnormal-ECGs/tree/main/videos)
 
 ## Repository Structure
 ```
@@ -75,7 +79,6 @@ Although there is already quite sophisticated hardware and software available to
 
 ├── data
 |   ├── ecg.csv
-|   ├── scores.csv 
 
 ├── Images 
 |   ├── anomalous_ecg.png
@@ -116,6 +119,9 @@ Although there is already quite sophisticated hardware and software available to
 |   ├── work_notebook_3.ipynb
 |   ├── jeff.ipynb
 |   ├── first_model_notebook.ipynb
+
+├── videos
+|   ├── ECG_Demo.mp4
     
 ├── .gitignore
 
