@@ -12,7 +12,7 @@ Doctors are in short supply worldwide.  Some areas, such as in central Africa an
 
 ## The Dataset
 
-This dataset, "ECG5000" is a 20-hour long ECG originating from Physionet. It consists of 5,000 heartbeats randomly selected from a single patient with congestive heart failure, recorded over a 20 hour period.  The set contains 2,919 normal heartbeats, labeled as “1”, and 2,079 abnormal heartbeats, labeled as “0”.  Each heartbeat has been made equal length, and consists of 140 datapoints.
+This dataset, "ECG5000" is a 20-hour long ECG originating from Physionet. It consists of nearly 5,000 heartbeats randomly selected from a single patient with congestive heart failure, recorded over a 20 hour period.  The set contains 2,919 normal heartbeats, labeled as “1”, and 2,079 abnormal heartbeats, labeled as “0”.  Each heartbeat has been made equal length, and consists of 140 datapoints.
 
 The data was split to remove the labels from the data and create a target data file with just the labels.  Both files were train-test split, and the data file was scaled between 0 and 1 as tensor arrays.  The training set was divided into normal and abnormal sets so the model could be trained on just the normal heartbeats.
 
@@ -25,7 +25,7 @@ For our models, the autoencoder will be trained to recognize only normal ECGs.  
 
 
 
-A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  The results of the baseline model were quite bad; at 53% accuracy, it was worse that simply guessing that every heartbeat was normal!  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations, which used mean absolute error (MAE) to calculate error.  The process for each model was as follows:
+A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  The results of the baseline model were quite bad; at 53% accuracy, it was worse that simply guessing that every heartbeat was normal!  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations, which used mean absolute error (MAE) to calculate error.  The results for these models are discussed in the "Evaluation" section.  The process for each model was as follows:
 
 Comparison of Train vs. Validation Loss
 
@@ -40,13 +40,13 @@ Scoring (Accuracy, Precision, Recall, F1)
 Confusion Matrix
 
 ### Sample graphs of normal and abnormal heartbeats with reconstructions and error
-From the validation data using the best performing model.  A visual inspection illustrates how the model can accurately reconstruct a normal heartbeat, but has difficulty reconstructing an abnormal heartbeat, because the model was only trained on normal heartbeats
+From the validation data using the best performing model.  A visual inspection illustrates how the model can accurately reconstruct a normal heartbeat, but has difficulty reconstructing an abnormal heartbeat, because the model was only trained on normal heartbeats.
 
 ![image](https://user-images.githubusercontent.com/89176309/156687955-d2cac850-1890-4214-9707-2057cf1def29.png)
 ![image](https://user-images.githubusercontent.com/89176309/156688083-a69cca95-1b2b-4748-ab8c-0a8bec1ed2dc.png)
 
 ## Evaluation
-The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to give this metric the most attention, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  I made heavy use of loss curves for every model to make sure they were not overfitting.  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder tuned with keras tuner.  The model had a precision score of ~99% on the unseen test data, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs about 95% of the time.  Compared to the baseline model scores of 53% accuracy and 56% precision, this was a huge improvement over the initial model.  It was also notable that the 2nd PCA model had high scores, but both PCA models could be inconsistent in their results.  In the end, the keras tuned model was the best choice. 
+The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to give this metric the most attention, since we would rather tell someone they had a heart condition and find out they didn't, rather than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  I made use of loss statistic from the ephochs of each model to make sure they were not overfitting.  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder tuned with Keras Tuner.  The model had a precision score of ~99% on the unseen test data, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs about 95% of the time.  Compared to the baseline model scores of 53% accuracy and 56% precision, this was a huge improvement over the initial model.  It was also notable that the 2nd PCA model had high scores, but both PCA models could be inconsistent in their results.  In the end, the keras tuned model was the best choice. 
 
 I also looked at the graphs for the incorrect predictions we made (example below). For the 2 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by the trained model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
 
@@ -69,11 +69,10 @@ Although there is already quite sophisticated hardware and software available to
 
 ## One more thing - Streamlit
 
-I created a Streamlit app that I used to demonstrate the potential of running this model in a browser.  For the presentation connected with this project, I also produced a short video for Medic to illustrate its usage and siimplicity.  The Streamlit GitHub includes the Jupyter notebook and files for reproducibility.  It can be found [here](https://github.com/jeffbeech/ECG-Demo).  The demo video is located [here](https://github.com/jeffbeech/Detecting-Abnormal-ECGs/tree/main/videos)
+I created a Streamlit app that I used to demonstrate the potential of running this model in a browser.  For the presentation connected with this project, I also produced a short video to illustrate its usage and siimplicity.  The Streamlit GitHub includes the Jupyter notebook and files for reproducibility.  It can be found [here](https://github.com/jeffbeech/ECG-Demo).  The demo video is located [here](https://github.com/jeffbeech/Detecting-Abnormal-ECGs/tree/main/videos)
 
 ## Repository Structure
 ```
-
 ├── autoencoder
 |   ├──tuning_autoencoder6
 |      ├──Folders containing Keras Tuner modeling info   
