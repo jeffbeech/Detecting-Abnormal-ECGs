@@ -8,7 +8,7 @@ The electrocardiograph (ECG) is a universally accepted diagnostic tool for physi
 
 ## Business Problem
 
-Doctors are in short supply worldwide.  Some areas, such as in central Africa and western and central Asia, have less than 1 medical doctor per 1,000 people (2018 data from the World Bank.)  [Medic Mobile](https://medic.org/) has contracted my company to research and develop a viable model that can identify and tag anomalous electrocardiographs from a dataset that contains normal and abnormal ECGs.  Medic Mobile is a nonprofit organization that strives to improve health care for those living in hard-to-reach communities.  Medic Mobile now impacts 14 countries in Africa and Asia, having trained and equipped 24,463 health workers.
+Doctors are in short supply worldwide.  Some areas, such as in central Africa and western and central Asia, have less than 1 medical doctor per 1,000 people (2018 data from the World Bank.)  [Medic Mobile](https://medic.org/) has contracted my company, J. Wayne Enterprises, to research and develop a viable model that can identify and tag anomalous electrocardiographs from a dataset that contains normal and abnormal ECGs.  Medic Mobile is a nonprofit organization that strives to improve health care for those living in hard-to-reach communities.  Medic Mobile now impacts 14 countries in Africa and Asia, having trained and equipped 24,463 health workers.
 
 ## The Dataset
 
@@ -21,11 +21,11 @@ The problem at hand will be solved with a neural network using an autoencoder.  
 
 ![](https://user-images.githubusercontent.com/89176309/156230964-139eea97-a9c8-4da3-b39d-7e05ef0fbd56.png)
 
-For our model, the autoencoder will be trained to recognize only normal ECGs.  The difference between each original and “reconstructed” ECG will measure and recorded as the amount of error.  We’ll take the errors and add a threshold amount – anything greater than that total amount will be identified as an abnormal ECG when we show the model our mixed set of normal and abnormal ECGs.
+For our models, the autoencoder will be trained to recognize only normal ECGs.  The difference between each original and “reconstructed” ECG will measure and recorded as the amount of error.  We’ll take the errors and add a threshold amount – any error greater than that total amount will be identified as an abnormal ECG when we show the model our mixed set of normal and abnormal ECGs.
 
 
 
-A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations, which used mean absolute error (MAE) to calculate error.  The process for each model was as follows:
+A baseline model, using Principal Component Analysis in the Autoencoder, was instatiated and run.  The model was simple, having only 2 layers in and out, and a bottleneck of 2 dimensions.  Because it was a PCA model, the relationships caculated between dimensions were linear, and error was calculated using mean squared error (MSE).  This model was run for 15 epochs.  The results of the baseline model were quite bad; at 53% accuracy, it was worse that simply guessing that every heartbeat was normal!  Another PCA model was run with with additional layers and hyperperameters, followed by 2 other autoencoder models with non-linear activations, which used mean absolute error (MAE) to calculate error.  The process for each model was as follows:
 
 Comparison of Train vs. Validation Loss
 
@@ -40,12 +40,13 @@ Scoring (Accuracy, Precision, Recall, F1)
 Confusion Matrix
 
 ### Sample graphs of normal and abnormal heartbeats with reconstructions and error
+From the validation data using the best performing model.  A visual inspection illustrates how the model can accurately reconstruct a normal heartbeat, but has difficulty reconstructing an abnormal heartbeat, because the model was only trained on normal heartbeats
 
 ![image](https://user-images.githubusercontent.com/89176309/156687955-d2cac850-1890-4214-9707-2057cf1def29.png)
 ![image](https://user-images.githubusercontent.com/89176309/156688083-a69cca95-1b2b-4748-ab8c-0a8bec1ed2dc.png)
 
 ## Evaluation
-The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to lean into this metric, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not (a false positive).  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder, tuned with keras tuner.  The code for the keras tuner was adapted from [analyticvidhya.com](https://www.analyticsvidhya.com/blog/2021/05/anomaly-detection-using-autoencoders-a-walk-through-in-python/)  The model gave a precision score of ~99%, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~94%, which means it accurately evaluated all of the ECGs about 94% of the time.  Compared to the baseline model scores of 74% accuracy and 73% precision, this was a huge improvement.
+The precision metric was the primary metric I used, because it tells the percentage of the time I was predicting a normal heartbeat and getting it right.  It made more sense to give this metric the most attention, since we would rather tell someone they had a heart condition and find out they didn't than tell them they have a healthy heart when they do not.  (Truly, we'd rather get every single ECG right, but our models are not that good, yet!)  I made heavy use of loss curves for every model to make sure they were not overfitting.  For correctly differentiating between normal and abnormal heartbeats, and also having the fewest number of false positives, the best model was the autoencoder tuned with keras tuner.  The model had a precision score of ~99% on the unseen test data, meaning that of the all the people predicted of having a normal heartbeat, the model was correct ~99% of the time.  The model had an accuracy score of ~95%, which means it accurately evaluated all of the ECGs about 95% of the time.  Compared to the baseline model scores of 53% accuracy and 56% precision, this was a huge improvement over the initial model.  It was also notable that the 2nd PCA model had high scores, but both PCA models could be inconsistent in their results.  In the end, the keras tuned model was the best choice. 
 
 I also looked at the graphs for the incorrect predictions we made (example below). For the 2 false positives, the graphs show a fairly faithful reproduction with, by appearance, a low error rate.  Obviously, something that couldn't be detected by the trained model was wrong with these ECGs.  For the false negatives, for the most part, it appears as though the model just did a poor job of recognizing these ECGs, as the reconstructions are not faithful to the originals.
 
@@ -54,7 +55,7 @@ I also looked at the graphs for the incorrect predictions we made (example below
 
 Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was also first place in false negatives.
 
-![scores](https://user-images.githubusercontent.com/89176309/156624305-ba539f16-f8a2-4ced-8aa6-57e9d358ce1e.png)
+<img width="926" alt="Screen Shot 2022-03-08 at 8 02 11 PM" src="https://user-images.githubusercontent.com/89176309/157358384-c0d498f7-d7c2-444a-b718-43ece9317c54.png">
 
 ## Recommendations and Next Steps
 First, it is important to emphasize that nothing replaces an expert eye and mind on complex health issues.  These recommendations are meant to supplement medical professionals, not to replace their expertise.  With that said, I suggest these items as next steps:
@@ -117,7 +118,6 @@ I created a Streamlit app that I used to demonstrate the potential of running th
 |   ├── work_notebook_1.ipynb
 |   ├── work_notebook_2.ipynb
 |   ├── work_notebook_3.ipynb
-|   ├── jeff.ipynb
 |   ├── first_model_notebook.ipynb
 
 ├── videos
