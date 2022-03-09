@@ -114,7 +114,6 @@ I created a Streamlit app that I used to demonstrate the potential of running th
 |       ├──Folders and files containing saved seq_model_1 info
 
 ├── notebooks
-|   ├── Streamlit.ipynb
 |   ├── work_notebook_1.ipynb
 |   ├── work_notebook_2.ipynb
 |   ├── work_notebook_3.ipynb
