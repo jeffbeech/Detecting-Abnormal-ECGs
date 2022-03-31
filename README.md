@@ -55,7 +55,7 @@ I also looked at the graphs for the incorrect predictions we made (example below
 
 Finally, we compared our models as shown in the graph below - as you can see, 3 of the 4 models all had good scores; the best model won out by doing best with false positives and was also first place in false negatives.
 
-<img width="926" alt="Screen Shot 2022-03-08 at 8 02 11 PM" src="https://user-images.githubusercontent.com/89176309/157358384-c0d498f7-d7c2-444a-b718-43ece9317c54.png">
+![Detecting Abnormal ECGs (2)](https://user-images.githubusercontent.com/89176309/160956617-ba494442-662e-453b-8e53-e5a1b816f7d8.png)
 
 ## Recommendations and Next Steps
 First, it is important to emphasize that nothing replaces an expert eye and mind on complex health issues.  These recommendations are meant to supplement medical professionals, not to replace their expertise.  With that said, I suggest these items as next steps:
