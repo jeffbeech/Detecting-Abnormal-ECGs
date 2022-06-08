@@ -1,0 +1,3 @@
+,Baseline Model,Model 2 - PCA,Non-Linear Autoencoder,Keras Tuned Autoencoder
+Accuracy,0.54,0.946,0.944,0.942
+Precision,0.5746864310148233,0.9908592321755028,0.9944547134935305,0.9926062846580407

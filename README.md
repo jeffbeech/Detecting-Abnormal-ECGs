@@ -79,6 +79,7 @@ I created a Streamlit app that I used to demonstrate the potential of running th
 
 ├── data
 |   ├── ecg.csv
+|   ├── tableau_csv - contains csv files for tableau charts
 
 ├── Images 
 |   ├── anomalous_ecg.png
@@ -117,6 +118,7 @@ I created a Streamlit app that I used to demonstrate the potential of running th
 |   ├── work_notebook_2.ipynb
 |   ├── work_notebook_3.ipynb
 |   ├── first_model_notebook.ipynb
+|   ├── project_notebook_with_tableau_exports
 
 ├── videos
 |   ├── ECG_Demo.mp4
